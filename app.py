@@ -18,12 +18,12 @@ docs = DocumentArray(
     ]
 )
 
-flow = Flow.load_config("flow-chunks.yml")
+flow = Flow.load_config("flow.yml")
 
 with flow:
-    response = flow.index(docs, show_progress=True)
+    indexed_docs = flow.index(docs, show_progress=True)
 
-for doc in response:
+for doc in indexed_docs:
     print(doc.text)
     for chunk in doc.chunks:
         print("\t", chunk.text)
@@ -31,5 +31,7 @@ for doc in response:
 with flow:
     results = flow.search(Document(text="wimble"))
 
+    print(results)
+    print(f"Matches returned: {len(results[0].matches)}")
     for match in results[0].matches:
         print(match.text)
